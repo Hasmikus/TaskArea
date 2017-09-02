@@ -1,0 +1,10 @@
+{
+  "name": "task-area",
+  "description": "Task base system for people who just need a help in doing something",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+  }
+}
