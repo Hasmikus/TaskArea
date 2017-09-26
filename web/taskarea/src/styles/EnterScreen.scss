@@ -1,0 +1,92 @@
+@font-face {
+   font-family: headerFont;
+   src: url(../assets/SansationLight.woff);
+}
+.enterScreen {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 720px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  div {
+      width: 50%;
+      min-height: 300px;
+      height: 25%;
+  }
+
+  .header {
+      text-align: center;
+      background-color: #525963;
+      color: white;
+      left: 0;
+      line-height: 200px;
+      margin: auto;
+      position: absolute;
+      top: 29%;
+      width: 100%;
+      min-height: 33%;
+      p {
+         font-family: headerFont;
+         font-size: 48px;;
+      }
+      .greenButton {
+           background-color: #16805d;
+           line-height: 2.5;
+           -moz-border-radius:28px;
+           -webkit-border-radius:28px;
+           border-radius:28px;
+           display:inline-block;
+           cursor:pointer;
+           color:#ffffff;
+           font-family:Arial;
+           font-size:17px;
+           width: 20%;
+           height: 20%;
+           position: absolute;
+           top: 65%;
+           left: 40%;
+           text-decoration:none;
+           text-shadow:0px 1px 0px #2f6627;
+     }
+     .greenButton:hover {
+           background-color:#5cbf2a;
+     }
+     .greenButton:active {
+           position:relative;
+           top:1px;
+     }
+  }
+
+
+  .div1 {
+      background-image: url("../images/desk.jpg");
+      float: left;
+  }
+  .div2 {
+      background-image: url("../images/man.jpg");
+      float: right;
+  }
+  .div3 {
+      background-image: url("../images/girl.jpg");
+      background-repeat: no-repeat;
+      float: left;
+      margin-top: 8%
+  }
+  .div4 {
+      background-image: url("../images/kitchen_decor.jpg");
+      float: right;
+      margin-top: 8%
+  }
+
+
+
+}
