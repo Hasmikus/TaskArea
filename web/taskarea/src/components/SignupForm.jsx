@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../styles/SignUpPage.scss';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -19,54 +20,60 @@ class SignupForm extends Component {
     this.setState({[e.target.name]: e.target.value});
   }
   onSubmit(e) {
+    if (this.state.passwordConfirmation !== this.state.password) {
+      console.log("Passwords don't match! Try again");
+      return;
+    }
     e.preventDefault();
-    this.props.userSignupRequest(this.state);
+    this.props.userSignupRequest(this.state, this.props.db);
   }
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <h1> Join our community!</h1>
-
         <div className="form-group">
-          <label className="control-label">Username</label>
           <input
             type="text"
             name="username"
             value={this.state.username}
             onChange={this.onChange}
-            className="form-control"
+            placeholder="Username"
+            className="form-control formInput"
           />
-          <label className="control-label">Email</label>
           <input
             type="text"
             name="email"
             value={this.state.email}
             onChange={this.onChange}
-            className="form-control"
+            placeholder="Email address"
+            className="form-control formInput"
           />
-          <label className="control-label">Password</label>
           <input
             type="password"
             name="password"
             value={this.state.password}
             onChange={this.onChange}
-            className="form-control"
+            placeholder="Password"
+            className="form-control formInput"
           />
-          <label className="control-label">Password Confirmation</label>
           <input
             type="password"
             name="passwordConfirmation"
             value={this.state.passwordConfirmation}
             onChange={this.onChange}
-            className="form-control"
+            placeholder="Password confirmation"
+            className="form-control formInput"
           />
 
         </div>
         <div className="form-group">
-          <button className="btn btn-primary btn-lg">
-            Sign Up
+          <button className="btn btn-primary btn-lg signup">
+            Create a free account
           </button>
-        </div>
+          <p>or</p>
+          <button className="btn btn-primary btn-lg google-button">
+            Sign with Google
+          </button>
+       </div>
       </form>
     );
   }
