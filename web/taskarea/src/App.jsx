@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 //import TaskList from './components/TaskList';
-import EnterScreen from './components/EnterScreen';
 import SignupPage from './components/SignupPage';
+import SignInPage from './components/SignInPage';
 import firebase from 'firebase';
 
 class App extends Component {
@@ -16,14 +16,15 @@ class App extends Component {
            storageBucket: "taskarea-10ebf.appspot.com",
            messagingSenderId: "31706505887"
        };
-       firebase.initializeApp(config); 
+       firebase.initializeApp(config)
+          .database()
+          .ref();
   }
 
   render() {
     return (
       <div id="App">
-        <SignupPage />
-         {/*<EnterScreen/>*/}
+        <SignupPage db={firebase}/>
       </div>
     );
   }

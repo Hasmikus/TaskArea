@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../styles/SignUpPage.scss';
+import {Icon} from 'react-fa'
 
 class SignupForm extends Component {
   constructor(props) {
@@ -28,40 +29,43 @@ class SignupForm extends Component {
     this.props.userSignupRequest(this.state, this.props.db);
   }
   render() {
+    let iconUser = <Icon name="user" />
+    let email    = <Icon name="envelope" />
+    let password = <Icon name="unlock-alt" />
     return (
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
-          <input
+          <InputData
             type="text"
             name="username"
             value={this.state.username}
             onChange={this.onChange}
             placeholder="Username"
-            className="form-control formInput"
+            icon="user"
           />
-          <input
+          <InputData
             type="text"
             name="email"
             value={this.state.email}
             onChange={this.onChange}
             placeholder="Email address"
-            className="form-control formInput"
+            icon="envelope"
           />
-          <input
+          <InputData
             type="password"
             name="password"
             value={this.state.password}
             onChange={this.onChange}
             placeholder="Password"
-            className="form-control formInput"
+            icon="unlock-alt"
           />
-          <input
+          <InputData
             type="password"
             name="passwordConfirmation"
             value={this.state.passwordConfirmation}
             onChange={this.onChange}
             placeholder="Password confirmation"
-            className="form-control formInput"
+            icon="unlock-alt"
           />
 
         </div>
@@ -77,6 +81,24 @@ class SignupForm extends Component {
       </form>
     );
   }
+}
+
+class InputData extends Component {
+    render() {
+        return(
+          <div className="input-data">
+              <Icon className="input-icon" name={this.props.icon} />
+              <input
+                type={this.props.type}
+                name={this.props.name}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                placeholder={this.props.placeholder}
+                className="form-control"
+              />
+          </div>
+        );
+    }
 }
 
 SignupForm.propTypes = {
