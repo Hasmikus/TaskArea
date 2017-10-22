@@ -5,25 +5,21 @@ import '../styles/SignUpPage.scss';
 import SignInForm from './SignInForm';
 import { connect } from 'react-redux';
 import { userSignInRequest } from '../actions/signupActions'
+import {auth, db} from '../firebase';
 
 class SignInPage extends Component {
 
-  render() {
-    const { userSignupRequest, db} = this.props;
-    return (
-        <div className="row signupContainer">
-          <div className="col-md-4 col-md-offset-4 formContainer">
-            <div>
-              <SignInForm userSignupRequest={userSignupRequest} db={db}/>
+    render () {
+        return (
+            <div className='row signupContainer'>
+                <div className='col-md-4 col-md-offset-4 formContainer'>
+                    <div>
+                        <SignInForm userSignInRequest={userSignInRequest} auth={auth} />
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-    );
-  }
-}
-
-SignInPage.propTypes = {
-    userSignInRequest: React.PropTypes.func.isRequired
+        );
+    }
 }
 
 export default connect(null, {userSignInRequest})(SignInPage);
