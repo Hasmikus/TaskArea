@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import '../styles/SignUpPage.scss';
-import {Icon} from 'react-fa'
+import {Icon} from 'react-fa';
+import PropTypes from 'prop-types';
 
-class SignInForm extends Component {
-    constructor (props) {
+import UserStore from '../stores/UserStore';
+
+export default class SignInForm extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             username: '',
@@ -16,19 +18,23 @@ class SignInForm extends Component {
 
     }
 
-    onChange (e) {
+    onChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
-    onSubmit (e) {
-        e.preventDefault();
-        this.props.userSignInRequest(this.state, this.props.auth);
-    }
-    render () {
-        let iconUser = <Icon name='user' />
-        let email    = <Icon name='envelope' />
-        let password = <Icon name='unlock-alt' />
 
-        //TODO add login by username
+    onSubmit(e) {
+        let currentUser = this.props.auth.currentUser;
+        e.preventDefault();
+        UserStore.userSignInRequest(this.state, this.props.auth)
+            .then(() => {
+                if (!UserStore.signInError) {
+                    this.props.history.push(`/user/${currentUser.m}`);
+                }
+            }
+            );
+    }
+
+    render() {
         return (
             <div>
                 <p>TaskArea</p>
@@ -64,11 +70,11 @@ class SignInForm extends Component {
             </div>
         );
     }
-}
+};
 
 class InputData extends Component {
     render () {
-        return(
+        return (
             <div className='input-data'>
                 <Icon className='input-icon' name={this.props.icon} />
                 <input
@@ -82,9 +88,19 @@ class InputData extends Component {
             </div>
         );
     }
+};
+
+InputData.propTypes = {
+    type: PropTypes.string,
+    name: PropTypes.string,
+    value: PropTypes.string,
+    icon: PropTypes.string,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func,
 }
 
 SignInForm.propTypes = {
-    userSignInRequest: React.PropTypes.func.isRequired,
+    userSignInRequest: PropTypes.func,
+    auth: PropTypes.object,
+    history: PropTypes.object,
 }
-export default SignInForm;

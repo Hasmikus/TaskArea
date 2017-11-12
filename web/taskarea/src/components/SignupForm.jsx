@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import '../styles/SignUpPage.scss';
-import {Icon} from 'react-fa'
+import {Icon} from 'react-fa';
+import PropTypes from 'prop-types';
 
-class SignupForm extends Component {
-    constructor (props) {
+export default class SignupForm extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             username: '',
@@ -17,21 +17,21 @@ class SignupForm extends Component {
 
     }
 
-    onChange (e) {
+    onChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
-    onSubmit (e) {
+    onSubmit(e) {
         if (this.state.passwordConfirmation !== this.state.password) {
             console.log("Passwords don't match! Try again");
             return;
         }
         e.preventDefault();
         this.props.userSignupRequest(this.state, this.props.auth, this.props.db);
+        if (this.props.auth.currentUser) {
+            this.props.history.push(`/user/${this.props.auth.currentUser.m}`);
+        }
     }
-    render () {
-        let iconUser = <Icon name='user' />
-        let email    = <Icon name='envelope' />
-        let password = <Icon name='unlock-alt' />
+    render() {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className='form-group'>
@@ -101,7 +101,18 @@ class InputData extends Component {
     }
 }
 
-SignupForm.propTypes = {
-    userSignupRequest: React.PropTypes.func.isRequired,
+InputData.propTypes = {
+    type: PropTypes.string,
+    name: PropTypes.string,
+    value: PropTypes.string,
+    icon: PropTypes.string,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func,
 }
-export default SignupForm;
+
+SignupForm.propTypes = {
+    userSignupRequest: PropTypes.func,
+    auth: PropTypes.object,
+    history: PropTypes.object,
+    db: PropTypes.object,
+}

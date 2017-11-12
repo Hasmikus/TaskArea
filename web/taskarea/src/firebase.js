@@ -6,7 +6,7 @@ let config = {
     databaseURL: "https://taskarea-10ebf.firebaseio.com/",
     projectId: "taskarea-10ebf",
     storageBucket: "taskarea-10ebf.appspot.com",
-    messagingSenderId: "31706505887"
+    messagingSenderId: "31706505887",
 };
 
 export const firebaseApp = firebase.initializeApp(config);
@@ -15,5 +15,5 @@ export const auth = firebaseApp.auth();
 export const storageKey = 'pain-login';
 
 export const isAuthenticated = () => {
-  return !!auth.currentUser || !!localStorage.getItem(storageKey);
+    return !!auth.currentUser || !!localStorage.getItem(storageKey);
 }

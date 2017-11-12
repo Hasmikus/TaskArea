@@ -1,20 +1,28 @@
 // SignupPage.jsx
-
 import React, {Component} from 'react';
-import '../styles/SignUpPage.scss';
+import {observer} from "mobx-react";
+
 import SignupForm from './SignupForm';
-import { connect } from 'react-redux';
-import { userSignupRequest } from '../actions/signupActions';
 import {auth, db} from '../firebase';
+import UserStore from '../stores/UserStore';
+import PropTypes from 'prop-types';
 
-class SignupPage extends Component {
+@observer
+export default class SignupPage extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-    render () {
+    render() {
         return (
             <div className='row signupContainer'>
                 <div className='col-md-4 col-md-offset-4 formContainer'>
                     <div>
-                        <SignupForm userSignupRequest={userSignupRequest} auth={auth} db={db} />
+                        <SignupForm
+                            userSignupRequest={UserStore.userSignupRequest}
+                            auth={auth}
+                            db={db}
+                            history={this.props.history} />
                     </div>
                 </div>
             </div>
@@ -22,4 +30,6 @@ class SignupPage extends Component {
     }
 }
 
-export default connect(null, {userSignupRequest})(SignupPage);
+SignupPage.propTypes = {
+    history: PropTypes.object,
+}

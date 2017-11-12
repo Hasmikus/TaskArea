@@ -1,39 +1,42 @@
-import React, { Component } from 'react';
-import { Router, Route, browserHistory } from 'react-router';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-
-import {firebaseApp, auth, storageKey, isAuthenticated} from './firebase';
+import React, {Component} from 'react';
+import {Route, Router} from 'react-router-dom';
 
 import SignupPage from './components/SignupPage';
 import SignInPage from './components/SignInPage';
 import EnterScreen from './components/EnterScreen';
-import Profile from './components/Profile';
+import Timeline from './components/Timeline';
+
+import TaskStore from './stores/TaskStore';
+import UserStore from './stores/UserStore';
 import './App.css';
 
-const store = createStore (
-  (state = {}) => state,
-  applyMiddleware(thunk)
-);
+import { Provider } from 'mobx-react';
+import history from './history';
+
+const stores = {
+    TaskStore,
+    UserStore,
+};
 
 class App extends Component {
-  constructor(props) {
-      super(props);
-  }
+    constructor (props) {
+        super(props);
+    }
 
-  render() {
-    return (
-        <Provider store={store}>
-          <Router history={browserHistory}>
-              <Route path="/" component={EnterScreen} />
-              <Route path="/signup" component={SignupPage} />
-              <Route path="/signin" component={SignInPage} />
-              <Route path="/user(/:uid)" component={Profile} />
-          </Router>
-        </Provider>
-    );
-  }
+    render () {
+        return (
+            <Provider {...stores}>
+                <Router history={history}>
+                    <div>
+                        <Route exact path='/' component={EnterScreen} store={TaskStore} />
+                        <Route path='/signup' component={SignupPage} />
+                        <Route path='/signin' component={SignInPage} />
+                        <Route path='/user/:uid' component={Timeline} />
+                    </div>
+                </Router>
+            </Provider>
+        );
+    }
 }
 
 export default App;

@@ -1,25 +1,34 @@
 // SignInPage.jsx
-
 import React, {Component} from 'react';
-import '../styles/SignUpPage.scss';
+import {observer} from 'mobx-react';
+import {observable} from "mobx";
+import PropTypes from 'prop-types';
+
 import SignInForm from './SignInForm';
-import { connect } from 'react-redux';
-import { userSignInRequest } from '../actions/signupActions'
-import {auth, db} from '../firebase';
 
-class SignInPage extends Component {
+import {auth} from '../firebase';
+import UserStore from '../stores/UserStore';
 
-    render () {
+@observer
+export default class SignInPage extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+
+    render() {
         return (
             <div className='row signupContainer'>
                 <div className='col-md-4 col-md-offset-4 formContainer'>
                     <div>
-                        <SignInForm userSignInRequest={userSignInRequest} auth={auth} />
+                        <SignInForm auth={auth} history={this.props.history} />
                     </div>
                 </div>
             </div>
         );
     }
-}
+};
 
-export default connect(null, {userSignInRequest})(SignInPage);
+SignInPage.propTypes = {
+    history: PropTypes.object,
+}
