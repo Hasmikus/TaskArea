@@ -1,0 +1,37 @@
+.feed {
+  display: inline-block;
+  width: 75%;
+  margin-left: 25%; }
+
+.taskContainer {
+  width: 482px;
+  background: #477a74;
+  height: 25%;
+  display: inline-block;
+  border-radius: 17px;
+  margin: 5% 0 0 10%; }
+  .taskContainer .taskContent {
+    text-align: center; }
+    .taskContainer .taskContent p {
+      word-break: break-all;
+      width: 80%;
+      margin: auto; }
+  .taskContainer .left-items {
+    display: inline-flex;
+    float: left;
+    margin: 3% 0 0 3%;
+    font-size: 24px; }
+    .taskContainer .left-items span {
+      margin-left: 13%; }
+  .taskContainer .right-items {
+    display: inline-flex;
+    float: right;
+    margin: 2% 5% 1% 0; }
+    .taskContainer .right-items span {
+      margin-left: 13px;
+      height: 33px;
+      line-height: 33px; }
+  .taskContainer .price {
+    border-radius: 47%;
+    width: 39px;
+    background-color: #7eb4ad; }

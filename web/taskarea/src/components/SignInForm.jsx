@@ -28,7 +28,7 @@ export default class SignInForm extends Component {
         UserStore.userSignInRequest(this.state, this.props.auth)
             .then(() => {
                 if (!UserStore.signInError) {
-                    this.props.history.push(`/user/${currentUser.m}`);
+                    this.props.history.push(`/user/${currentUser.uid}`);
                 }
             }
             );

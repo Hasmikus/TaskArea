@@ -17,3 +17,11 @@ export const storageKey = 'pain-login';
 export const isAuthenticated = () => {
     return !!auth.currentUser || !!localStorage.getItem(storageKey);
 }
+
+export const state = auth.onAuthStateChanged(function(user) {
+  if (user) {
+      console.log('logged in', auth.currentUser);
+  } else {
+      console.log('Logged out');
+  }
+});

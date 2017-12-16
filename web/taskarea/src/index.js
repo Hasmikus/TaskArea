@@ -5,6 +5,7 @@ import App from './App';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/EnterScreen.css'
 import './styles/Timeline.css'
+import './styles/TaskList.css'
 import './styles/SignUpPage.css';
 
 render (

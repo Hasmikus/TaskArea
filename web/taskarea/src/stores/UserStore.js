@@ -4,6 +4,7 @@ class UserStore {
     @observable authState = false;
     @observable signInError = null;
     @observable signUpError = null;
+    @observable currentUser = null;
 
     @action
     userSignupRequest(userData, auth) {

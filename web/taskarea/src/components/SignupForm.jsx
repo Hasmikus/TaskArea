@@ -28,7 +28,7 @@ export default class SignupForm extends Component {
         e.preventDefault();
         this.props.userSignupRequest(this.state, this.props.auth, this.props.db);
         if (this.props.auth.currentUser) {
-            this.props.history.push(`/user/${this.props.auth.currentUser.m}`);
+            this.props.history.push(`/user/${this.props.auth.currentUser.uid}`);
         }
     }
     render() {

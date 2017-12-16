@@ -7,15 +7,15 @@ const tasks_subkey = 'tasks';
 export default class TaskStore extends MobxFirebaseStore {
  
   constructor(config) {
-    const fbApp = firebaseApp; 
-    const store = new MobxFirebaseStore(Firebase.database(fbApp).ref());
-    super(store.fb);
+      const fbApp = firebaseApp;
+      const store = new MobxFirebaseStore(Firebase.database(fbApp).ref());
+      super(store.fb);
   }
 
   allTweetsSubs() {
       return [{
           subKey: tasks_subkey,
-          asList: true
+          asList: true,
       }];
   }
 
@@ -23,7 +23,7 @@ export default class TaskStore extends MobxFirebaseStore {
       this.fb.child(tasks_subkey).push(task);
   }
 
-  resolveFirebaseQuery(sub) { 
+  resolveFirebaseQuery(sub) {
       return this.fb.child(tasks_subkey).orderByChild('timestamp').limitToLast(10);
   }
 }

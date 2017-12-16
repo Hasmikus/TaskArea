@@ -21,7 +21,9 @@ export default class SignInPage extends Component {
             <div className='row signupContainer'>
                 <div className='col-md-4 col-md-offset-4 formContainer'>
                     <div>
-                        <SignInForm auth={auth} history={this.props.history} />
+                        <SignInForm
+                            auth={auth}
+                            history={this.props.history} />
                     </div>
                 </div>
             </div>
