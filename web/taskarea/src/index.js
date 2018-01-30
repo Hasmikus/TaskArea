@@ -7,6 +7,7 @@ import './styles/EnterScreen.css'
 import './styles/Timeline.css'
 import './styles/TaskList.css'
 import './styles/SignUpPage.css';
+import './styles/TaskForm.css';
 
 render (
     <App />,

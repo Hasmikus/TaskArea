@@ -1,30 +1,28 @@
 import {observable, action} from 'mobx';
+import {auth} from '../firebase';
 
 class UserStore {
     @observable authState = false;
     @observable signInError = null;
-    @observable signUpError = null;
+    @observable signUpError = 'aaasss';
     @observable currentUser = null;
 
     @action
-    userSignupRequest(userData, auth) {
+    userSignupRequest = (userData, auth) => {
         let self = this;
         return auth.createUserWithEmailAndPassword(userData.email, userData.password)
-            .then(function(user) {
+            .then((user) => {
                 user.updateProfile({
                     displayName: userData.username,
                     photoURL: 'http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg',
-                })
-                    .then(function() {
-                        self.signUpError = null;
-                    })
-                    .catch(function (error) {
-                        self.signUpError = error;
-                    });
-            })
-            .catch(function(error) {
-                console.log(error.message);
-            })
+                });
+                return {
+                    username: userData.username,
+                    photoURL: 'http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg',
+                    uid: user.uid,
+                    email: userData.email
+                };
+            });
     }
 
     @action
@@ -36,11 +34,12 @@ class UserStore {
             })
             .catch(function(error) {
                 self.signInError = error;
+                return {error: self.signInError.message};
             })
     }
 
     @action
-    signOut(auth) {
+    signOut() {
         auth.signOut();
     }
 }

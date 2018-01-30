@@ -7,28 +7,30 @@ import {Button} from 'react-bootstrap'
 import {auth} from '../firebase';
 import UserStore from '../stores/UserStore';
 
+import M from '../messages/en.messages';
+
 @observer
 export default class EnterScreen extends Component {
     render() {
         return (
             <div className='enterScreen'>
                 <span className='buttonGroup'>
-                   <Button bsSize='large' className='topButton'>Get started</Button>
+                   <Button bsSize='large' className='topButton'>{M.getStarted}</Button>
                     <Link to='/signup'>
                         <Button bsSize='large' className='topButton signUpButton'>
-                            Sign Up
+                            {M.signUp}
                         </Button>
                     </Link>
                     <Link to={auth.currentUser ? `/user/${auth.currentUser.displayName}` : '/signin'}>
                         <Button bsSize='large' className='topButton signInButton'>
-                            Sign In
+                            {M.signIn}
                         </Button>
                     </Link>
                 </span>
                 <div className='div1' />
                 <div className='div2' />
                 <div className='header'>
-                    <p>MANAGING YOUR TASKS TOGETHER</p>
+                    <p>{M.homePageTitle}</p>
                 </div>
                 <div className='div3' />
                 <div className='div4' />

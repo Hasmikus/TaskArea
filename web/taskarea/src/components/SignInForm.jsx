@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
+import {observer} from 'mobx-react';
 import {Icon} from 'react-fa';
 import PropTypes from 'prop-types';
 
 import UserStore from '../stores/UserStore';
 
+import M from '../messages/en.messages';
+
+@observer
 export default class SignInForm extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +15,7 @@ export default class SignInForm extends Component {
             username: '',
             email: '',
             password: '',
+            error: null
         }
 
         this.onChange = this.onChange.bind(this);
@@ -23,15 +28,16 @@ export default class SignInForm extends Component {
     }
 
     onSubmit(e) {
-        let currentUser = this.props.auth.currentUser;
         e.preventDefault();
         UserStore.userSignInRequest(this.state, this.props.auth)
-            .then(() => {
-                if (!UserStore.signInError) {
+            .then((data) => {
+                if (!data) {
+                    const currentUser = this.props.auth.currentUser;
                     this.props.history.push(`/user/${currentUser.uid}`);
+                } else {
+                    this.setState({error: data.error});
                 }
-            }
-            );
+            });
     }
 
     render() {
@@ -45,7 +51,7 @@ export default class SignInForm extends Component {
                             name='email'
                             value={this.state.email}
                             onChange={this.onChange}
-                            placeholder='Username or email address'
+                            placeholder={M.usernameOrEmail}
                             icon='user'
                         />
                         <InputData
@@ -53,18 +59,18 @@ export default class SignInForm extends Component {
                             name='password'
                             value={this.state.password}
                             onChange={this.onChange}
-                            placeholder='Password'
+                            placeholder={M.password}
                             icon='unlock-alt'
                         />
                     </div>
+                    {this.state.error && this.state.error.length && <span>
+                        <Icon name='warning' />
+                        {this.state.error}
+                    </span>}
                     <div className='form-group'>
-                        <button className='btn btn-primary btn-lg signup'>
-               Let me in
-                        </button>
+                        <button className='btn btn-primary btn-lg signup'>{M.signInByEmail}</button>
                         <p>or</p>
-                        <button className='btn btn-primary btn-lg google-button'>
-               Sign with Google
-                        </button>
+                        <button className='btn btn-primary btn-lg google-button'>{M.signWithGoogle}</button>
                     </div>
                 </form>
             </div>

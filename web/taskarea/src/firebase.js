@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import TaskStore from './stores/TaskStore';
 
 let config = {
     apiKey: "AIzaSyBfPOZwXyTq5Vj7OmKKgqIN9ijJKZGRCEk",
@@ -20,6 +21,8 @@ export const isAuthenticated = () => {
 
 export const state = auth.onAuthStateChanged(function(user) {
   if (user) {
+      TaskStore.setManagedTasks();
+      TaskStore.setCurrentTasks();
       console.log('logged in', auth.currentUser);
   } else {
       console.log('Logged out');

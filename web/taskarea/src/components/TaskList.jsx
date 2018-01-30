@@ -9,22 +9,20 @@ import Task from './Task';
 
 @observer
 export default class TaskList extends Component {
-    @observable userManagedTasks = Immutable.List([]);
 
     render() {
+        const {tasks} = this.props;
         return (
             <div className='feed'>
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
-                <Task />
+                {Object.entries(tasks).map(taskData =>{
+                    return <Task taskData={taskData[1]} taskID={taskData[0]} />
+                })}
             </div>
         )
     }
 }
+
+Task.propTypes = {
+    tasks: React.PropTypes.array,
+}
+

@@ -5,7 +5,7 @@
 
 .taskContainer {
   width: 482px;
-  background: #477a74;
+  background: #22252C;
   height: 25%;
   display: inline-block;
   border-radius: 17px;
@@ -23,6 +23,9 @@
     font-size: 24px; }
     .taskContainer .left-items span {
       margin-left: 13%; }
+    .taskContainer .left-items button {
+      background: none;
+      border: none; }
   .taskContainer .right-items {
     display: inline-flex;
     float: right;
@@ -34,4 +37,4 @@
   .taskContainer .price {
     border-radius: 47%;
     width: 39px;
-    background-color: #7eb4ad; }
+    background-color: #E14658; }

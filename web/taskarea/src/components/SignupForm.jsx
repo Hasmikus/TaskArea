@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {Icon} from 'react-fa';
 import PropTypes from 'prop-types';
 
+import M from '../messages/en.messages';
+
+
+import {db} from '../firebase';
+
 export default class SignupForm extends Component {
     constructor(props) {
         super(props);
@@ -10,6 +15,7 @@ export default class SignupForm extends Component {
             email: '',
             password: '',
             passwordConfirmation: '',
+            error: null
         }
 
         this.onChange = this.onChange.bind(this);
@@ -26,10 +32,20 @@ export default class SignupForm extends Component {
             return;
         }
         e.preventDefault();
-        this.props.userSignupRequest(this.state, this.props.auth, this.props.db);
-        if (this.props.auth.currentUser) {
-            this.props.history.push(`/user/${this.props.auth.currentUser.uid}`);
-        }
+        this.props.userSignupRequest(this.state, this.props.auth, this.props.db)
+            .then((user) => {
+                if (this.props.auth.currentUser && user) {
+                    db.ref(`users/${user.uid}`).set({
+                        name: user.username,
+                        photoURL: user.photoURL,
+                        email: user.email
+                    });
+                    this.props.history.push(`/user/${this.props.auth.currentUser.uid}`);
+                }
+            })
+            .catch((error) => {
+                this.setState({error: error.message});
+            });
     }
     render() {
         return (
@@ -40,7 +56,7 @@ export default class SignupForm extends Component {
                         name='username'
                         value={this.state.username}
                         onChange={this.onChange}
-                        placeholder='Username'
+                        placeholder={M.username}
                         icon='user'
                     />
                     <InputData
@@ -48,7 +64,7 @@ export default class SignupForm extends Component {
                         name='email'
                         value={this.state.email}
                         onChange={this.onChange}
-                        placeholder='Email address'
+                        placeholder={M.email}
                         icon='envelope'
                     />
                     <InputData
@@ -56,7 +72,7 @@ export default class SignupForm extends Component {
                         name='password'
                         value={this.state.password}
                         onChange={this.onChange}
-                        placeholder='Password'
+                        placeholder={M.password}
                         icon='unlock-alt'
                     />
                     <InputData
@@ -64,18 +80,21 @@ export default class SignupForm extends Component {
                         name='passwordConfirmation'
                         value={this.state.passwordConfirmation}
                         onChange={this.onChange}
-                        placeholder='Password confirmation'
+                        placeholder={M.passwordConfirm}
                         icon='unlock-alt'
                     />
-
                 </div>
+                {this.state.error && this.state.error.length && <span>
+                    <Icon name='warning' />
+                    {this.state.error}
+                </span>}
                 <div className='form-group'>
                     <button className='btn btn-primary btn-lg signup'>
-            Create a free account
+                        {M.signUpByEmail}
                     </button>
                     <p>or</p>
                     <button className='btn btn-primary btn-lg google-button'>
-            Sign with Google
+                        {M.signWithGoogle}
                     </button>
                 </div>
             </form>

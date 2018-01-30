@@ -1,29 +1,51 @@
-import Firebase from 'firebase';
-import MobxFirebaseStore from 'mobx-firebase-store';
-import {firebaseApp} from '../firebase';
+import {observable, action} from 'mobx';
+import {db, auth} from '../firebase';
 
 const tasks_subkey = 'tasks';
 
-export default class TaskStore extends MobxFirebaseStore {
- 
-  constructor(config) {
-      const fbApp = firebaseApp;
-      const store = new MobxFirebaseStore(Firebase.database(fbApp).ref());
-      super(store.fb);
+class TaskStore {
+  @observable managedTasks = [];
+  @observable tasks = [];
+
+  setManagedTasks = () => {
+      db.ref("tasks/").orderByChild("owner").equalTo(auth.currentUser.uid).on("value", (snapshot) => {
+          this.managedTasks = snapshot.val();
+      }, (errorObject) => {
+          console.log("The read failed: " + errorObject.code);
+      });
   }
 
-  allTweetsSubs() {
-      return [{
-          subKey: tasks_subkey,
-          asList: true,
-      }];
+  setCurrentTasks = () => {
+      db.ref("tasks/").on("value", (snapshot) => {
+          this.tasks = snapshot.val();
+      }, (errorObject) => {
+          console.log("The read failed: " + errorObject.code);
+      });
   }
 
-  createTask(task) {
-      this.fb.child(tasks_subkey).push(task);
+  @action
+  createTask = (task) => {
+      task.owner = auth.currentUser.uid;
+      task.assignee = auth.currentUser.uid;
+      task.state = 'new';
+      db.ref(`${tasks_subkey}`).push(task);
+  };
+
+  @action
+  assignTaskToUser = (userID, taskID) => {
+      db.ref(`${tasks_subkey}/${taskID}/assignee`).set(userID);
+      db.ref(`${tasks_subkey}/${taskID}/state`).set('inProgress');
+  };
+
+  @action
+  closeTask = (taskID) => {
+      db.ref(`${tasks_subkey}/${taskID}/state`).set('done');
+  };
+
+  getTask = (taskID) => {
+      return db.ref(`${tasks_subkey}/${taskID}`);
   }
 
-  resolveFirebaseQuery(sub) {
-      return this.fb.child(tasks_subkey).orderByChild('timestamp').limitToLast(10);
-  }
 }
+
+export default new TaskStore();
