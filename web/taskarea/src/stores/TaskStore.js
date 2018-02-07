@@ -6,28 +6,22 @@ const tasks_subkey = 'tasks';
 class TaskStore {
   @observable managedTasks = [];
   @observable tasks = [];
+  @observable notificationTasks = [];
 
-  setManagedTasks = () => {
-      db.ref("tasks/").orderByChild("owner").equalTo(auth.currentUser.uid).on("value", (snapshot) => {
-          this.managedTasks = snapshot.val();
-      }, (errorObject) => {
-          console.log("The read failed: " + errorObject.code);
-      });
-  }
+  setManagedTasks = (tasks) => {
+      this.managedTasks = tasks;
+  };
 
-  setCurrentTasks = () => {
-      db.ref("tasks/").on("value", (snapshot) => {
-          this.tasks = snapshot.val();
-      }, (errorObject) => {
-          console.log("The read failed: " + errorObject.code);
-      });
-  }
+  setCurrentTasks = (tasks) => {
+      this.tasks = tasks;
+  };
 
   @action
   createTask = (task) => {
       task.owner = auth.currentUser.uid;
       task.assignee = auth.currentUser.uid;
       task.state = 'new';
+      task.timestamp = Date.now();
       db.ref(`${tasks_subkey}`).push(task);
   };
 
@@ -44,6 +38,10 @@ class TaskStore {
 
   getTask = (taskID) => {
       return db.ref(`${tasks_subkey}/${taskID}`);
+  };
+
+  showNewTask(newTask) {
+    this.notificationTasks.push(newTask);
   }
 
 }

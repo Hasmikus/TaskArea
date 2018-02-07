@@ -26,6 +26,7 @@ export default class SignupForm extends Component {
     onChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
+    
     onSubmit(e) {
         if (this.state.passwordConfirmation !== this.state.password) {
             console.log("Passwords don't match! Try again");

@@ -28,8 +28,9 @@ export default class TaskForm extends Component {
 
     createTask = () => {
         const taskData = this.state;
-        taskData.deadline = taskData.deadline.toString();
+        taskData.deadline = taskData.deadline.format('DD/MM/YYYY');
         TaskStore.createTask(taskData);
+        this.props.onTaskCreateCallback();
     }
 
     setTaskField = (e) => {
@@ -37,7 +38,6 @@ export default class TaskForm extends Component {
     }
 
     setDeadline = (date) => {
-        console.log(date);
         this.setState({
             deadline: date
         });
@@ -55,7 +55,7 @@ export default class TaskForm extends Component {
                     <input name='value' value={this.state.value} className='form-control task-value' placeholder={M.taskValue}
                     onChange={(e) => this.setTaskField(e)} />
 
-                    <DatePicker dateFormat='YYYY/MM/DD'
+                    <DatePicker dateFormat='DD/MM/YYYY'
                         selected={this.state.deadline}
                         onChange={this.setDeadline}
                         name='deadline'

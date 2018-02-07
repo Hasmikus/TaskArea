@@ -8,6 +8,7 @@ import {auth, db} from '../firebase';
 
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
+import Notifications from './Notifications';
 
 import UserStore from '../stores/UserStore';
 import TaskStore from '../stores/TaskStore';
@@ -24,34 +25,52 @@ export default class Timeline extends Component {
             isCreateTaskFormShown: false,
             currentUser: auth.currentUser,
             tasksList: [],
-            timelineTitle: M.managedTasks
+            timelineTitle: M.currentTasksTitle
         };
     }
 
-
-    componentWillMount() {
-        this.showManagedTasks();
-    }
-
     componentDidMount() {
-        const loggedUser = auth.currentUser;
+        if (this.state.currentUser) {
+            db.ref("tasks/").orderByChild("owner").equalTo(this.state.currentUser.uid).on("value", (snapshot) => {
+                TaskStore.setManagedTasks(snapshot.val());
+            }, (errorObject) => {
+                console.log("The read failed: " + errorObject.code);
+            });
+        }
+
+        db.ref("tasks/").on("value", (snapshot) => {
+            TaskStore.setCurrentTasks(snapshot.val());
+            if (this.state.timelineTitle === M.currentTasksTitle) {
+                this.showCurrentTasks();
+            }
+        }, (errorObject) => {
+            console.log("The read failed: " + errorObject.code);
+        });
+
         auth.onAuthStateChanged((user) => {
-            if (user || loggedUser) {
-              this.setState({currentUser: user});
+            if (user) {
+                this.setState({currentUser: user});
+                this.showCurrentTasks();
+                db.ref("tasks/").orderByChild("owner").equalTo(user.uid).on("value", (snapshot) => {
+                    TaskStore.setManagedTasks(snapshot.val());
+                }, (errorObject) => {
+                    console.log("The read failed: " + errorObject.code);
+                });
             } else {
-              this.props.history.push(`/`);
+                this.props.history.push(`/`);
             }
         });
     }
 
     showManagedTasks = () => {
+        console.log(TaskStore.managedTasks);
         this.setState({
             timelineTitle: M.managedTasks,
             tasksList: TaskStore.managedTasks,
             isTasksListShown: true,
             isCreateTaskFormShown: false
         });
-    }
+    };
 
     showCurrentTasks = () => {
         this.setState({
@@ -60,7 +79,7 @@ export default class Timeline extends Component {
             isTasksListShown: true,
             isCreateTaskFormShown: false,
         });
-    }
+    };
 
     showCreateTaskForm = () => {
         this.setState({
@@ -68,11 +87,20 @@ export default class Timeline extends Component {
             isTasksListShown: false,
             isCreateTaskFormShown: true,
         });
-    }
+    };
+
+    onTaskCreated = () => {
+        this.setState({
+            timelineTitle: M.newTaskCreated,
+            tasksList: TaskStore.tasks,
+            isTasksListShown: true,
+            isCreateTaskFormShown: false,
+        });        
+    };
 
     signOut = (auth) => {
         UserStore.signOut(auth);
-    }
+    };
 
     render() {
         const {
@@ -122,8 +150,9 @@ export default class Timeline extends Component {
                     </Nav>
                 </div>
                 <h1 className='title'>{timelineTitle}</h1>
-                {isCreateTaskFormShown && <TaskForm currentUserID={auth.currentUser.uid} />}
-                {isTasksListShown && <TaskList tasks={tasksList} />}
+                {isCreateTaskFormShown && <TaskForm currentUserID={auth.currentUser.uid} onTaskCreateCallback={this.onTaskCreated} />}
+                {isTasksListShown && Object.keys(tasksList).length && <TaskList tasks={tasksList} />}
+                {TaskStore.notificationTasks.length && <Notifications />}
             </div>
         )};
     }

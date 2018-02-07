@@ -1,6 +1,6 @@
 .feed {
   display: inline-block;
-  width: 75%;
+  width: 40%;
   margin-left: 25%; }
 
 .taskContainer {
@@ -9,7 +9,13 @@
   height: 25%;
   display: inline-block;
   border-radius: 17px;
-  margin: 5% 0 0 10%; }
+  margin: 8% 0 0 10%; }
+  .taskContainer .reporter {
+    width: 14%;
+    border-radius: 50%;
+    margin-top: -2%;
+    position: relative;
+    left: -3%; }
   .taskContainer .taskContent {
     text-align: center; }
     .taskContainer .taskContent p {
@@ -38,3 +44,14 @@
     border-radius: 47%;
     width: 39px;
     background-color: #E14658; }
+
+.notifications {
+  float: right;
+  width: 25%; }
+  .notifications .notification {
+    width: 100%;
+    height: 100px;
+    margin: 1% 0 0 0;
+    background: #e1465761; }
+    .notifications .notification .notificationContent {
+      width: 70%; }

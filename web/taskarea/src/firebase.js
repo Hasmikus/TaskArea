@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import TaskStore from './stores/TaskStore';
+import UserStore from './stores/UserStore';
 
 let config = {
     apiKey: "AIzaSyBfPOZwXyTq5Vj7OmKKgqIN9ijJKZGRCEk",
@@ -19,12 +20,12 @@ export const isAuthenticated = () => {
     return !!auth.currentUser || !!localStorage.getItem(storageKey);
 }
 
-export const state = auth.onAuthStateChanged(function(user) {
-  if (user) {
-      TaskStore.setManagedTasks();
-      TaskStore.setCurrentTasks();
-      console.log('logged in', auth.currentUser);
-  } else {
-      console.log('Logged out');
-  }
+db.ref("users/").on("value", (snapshot) => {
+    UserStore.setUsers(snapshot.val());
+}, (errorObject) => {
+    console.log("The read failed: " + errorObject.code);
+});
+
+db.ref('tasks/').orderByChild('timestamp').startAt(Date.now()).on('child_added', function(snapshot) {
+   TaskStore.showNewTask(snapshot.val());
 });

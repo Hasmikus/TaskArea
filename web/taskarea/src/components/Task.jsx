@@ -8,13 +8,15 @@ import M from '../messages/en.messages';
 
 import {auth} from '../firebase';
 import TaskStore from '../stores/TaskStore';
+import UserStore from '../stores/UserStore';
 
 @observer
 export default class Task extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentTask: this.props.taskData
+            currentTask: this.props.taskData,
+            taskAssigneePhoto: ''
         }
     }
 
@@ -23,7 +25,14 @@ export default class Task extends Component {
     }
 
     componentWillMount() {
-        this.setState({currentTask: this.props.taskData});
+        console.log(UserStore.users);
+        const assigneeUser = Object.entries(UserStore.users).filter((userData) => {
+            return userData[0] === this.props.taskData.assignee;
+        })[0][1];
+        this.setState({
+            taskAssigneePhoto: assigneeUser.photoURL,
+            currentTask: this.props.taskData
+        });
     }
 
     onClick = (e) => {
@@ -50,7 +59,7 @@ export default class Task extends Component {
 
         return (
             <div className='taskContainer'>
-                <img className='reporter' />
+                <img className='reporter' src={this.state.taskAssigneePhoto} />
                 <div className='taskContent'>
                     <p>{taskData.title}</p>
                     <p>{taskData.description}</p>

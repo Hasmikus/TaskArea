@@ -23,5 +23,6 @@ export default {
     assignMe: 'Assign me',
     managedTasks: 'My Tasks',
     currentTasksTitle: 'All Active Tasks',
-    newTask: 'New Task'
+    newTask: 'New Task',
+    newTaskCreated: 'New has been successfully created!!'
 }

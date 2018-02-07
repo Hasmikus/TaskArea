@@ -1,11 +1,15 @@
 import {observable, action} from 'mobx';
-import {auth} from '../firebase';
+import {auth, db} from '../firebase';
 
 class UserStore {
     @observable authState = false;
-    @observable signInError = null;
-    @observable signUpError = 'aaasss';
     @observable currentUser = null;
+    @observable users = [];
+
+    @action
+    setUsers = (users) => {
+        this.users = users;
+    }
 
     @action
     userSignupRequest = (userData, auth) => {
