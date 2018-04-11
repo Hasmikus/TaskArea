@@ -12,7 +12,7 @@ export default class Notifications extends Component {
     constructor() {
         super();
         this.state = {
-            tasks: TaskStore.notificationTasks
+            tasks: TaskStore.notificationTasks,
         }
     }
 

@@ -24,5 +24,7 @@ export default {
     managedTasks: 'My Tasks',
     currentTasksTitle: 'All Active Tasks',
     newTask: 'New Task',
-    newTaskCreated: 'New has been successfully created!!'
+    newTaskCreated: 'New has been successfully created!!',
+    editProfile: 'Edit profile data',
+    myProfile: 'My Profile',
 }

@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {Icon} from 'react-fa';
-import PropTypes from 'prop-types';
 
 import M from '../messages/en.messages';
-
-
 import {db} from '../firebase';
 
 export default class SignupForm extends Component {
@@ -15,19 +12,15 @@ export default class SignupForm extends Component {
             email: '',
             password: '',
             passwordConfirmation: '',
-            error: null
+            error: null,
         }
-
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
     }
 
-    onChange(e) {
+    onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
-    }
-    
-    onSubmit(e) {
+    };
+
+    onSubmit = (e) => {
         if (this.state.passwordConfirmation !== this.state.password) {
             console.log("Passwords don't match! Try again");
             return;
@@ -39,7 +32,7 @@ export default class SignupForm extends Component {
                     db.ref(`users/${user.uid}`).set({
                         name: user.username,
                         photoURL: user.photoURL,
-                        email: user.email
+                        email: user.email,
                     });
                     this.props.history.push(`/user/${this.props.auth.currentUser.uid}`);
                 }
@@ -47,7 +40,8 @@ export default class SignupForm extends Component {
             .catch((error) => {
                 this.setState({error: error.message});
             });
-    }
+    };
+
     render() {
         return (
             <form onSubmit={this.onSubmit}>
@@ -122,17 +116,17 @@ class InputData extends Component {
 }
 
 InputData.propTypes = {
-    type: PropTypes.string,
-    name: PropTypes.string,
-    value: PropTypes.string,
-    icon: PropTypes.string,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func,
+    type: React.PropTypes.string,
+    name: React.PropTypes.string,
+    value: React.PropTypes.string,
+    icon: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    onChange: React.PropTypes.func,
 }
 
 SignupForm.propTypes = {
-    userSignupRequest: PropTypes.func,
-    auth: PropTypes.object,
-    history: PropTypes.object,
-    db: PropTypes.object,
+    userSignupRequest: React.PropTypes.func,
+    auth: React.PropTypes.object,
+    history: React.PropTypes.object,
+    db: React.PropTypes.object,
 }

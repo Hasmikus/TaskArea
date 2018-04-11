@@ -1,5 +1,5 @@
 import {observable, action} from 'mobx';
-import {auth, db} from '../firebase';
+import {auth} from '../firebase';
 
 class UserStore {
     @observable authState = false;
@@ -13,18 +13,17 @@ class UserStore {
 
     @action
     userSignupRequest = (userData, auth) => {
-        let self = this;
         return auth.createUserWithEmailAndPassword(userData.email, userData.password)
             .then((user) => {
                 user.updateProfile({
                     displayName: userData.username,
-                    photoURL: 'http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg',
+                    photoURL: 'https://www.drupal.org/files/profile_default.png',
                 });
                 return {
                     username: userData.username,
-                    photoURL: 'http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg',
+                    photoURL: 'https://www.drupal.org/files/profile_default.png',
                     uid: user.uid,
-                    email: userData.email
+                    email: userData.email,
                 };
             });
     }

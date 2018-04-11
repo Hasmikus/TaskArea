@@ -1,9 +1,6 @@
 // TaskList.jsx
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {observable} from "mobx";
-
-import {auth} from '../firebase';
 
 import Task from './Task';
 
@@ -16,7 +13,7 @@ export default class TaskList extends Component {
             return (
                 <div className='feed'>
                     {Object.entries(tasks).map(taskData =>{
-                        return <Task taskData={taskData[1]} taskID={taskData[0]} />
+                        return <Task key={taskData[0]} taskData={taskData[1]} taskID={taskData[0]} />
                     })}
                 </div>
             )} else {
@@ -26,6 +23,6 @@ export default class TaskList extends Component {
 }
 
 TaskList.propTypes = {
-    tasks: React.PropTypes.array,
+    tasks: React.PropTypes.object,
 }
 

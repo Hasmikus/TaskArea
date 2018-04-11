@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import DatePicker from 'react-datepicker';
 import {observer} from 'mobx-react';
-import {observable} from 'mobx';
 import moment from 'moment'
 
 import M from '../messages/en.messages';
@@ -22,7 +21,7 @@ export default class TaskForm extends Component {
             description: '',
             value: '',
             deadline: moment(),
-            state: ''
+            state: '',
         }
     }
 
@@ -39,21 +38,30 @@ export default class TaskForm extends Component {
 
     setDeadline = (date) => {
         this.setState({
-            deadline: date
+            deadline: date,
         });
     }
 
     render() {
         return (
             <div className='form-container'>
-                <input name='title' value={this.state.title} className='form-control' placeholder={M.taskTitle} onChange={(e) => this.setTaskField(e)} />
+                <input name='title' value={this.state.title}
+                    className='form-control'
+                    placeholder={M.taskTitle}
+                    onChange={this.setTaskField} />
 
-                <input name='description' value={this.state.description} className='form-control' placeholder={M.description}
-                onChange={(e) => this.setTaskField(e)} />
+                <input name='description'
+                    value={this.state.description}
+                    className='form-control'
+                    placeholder={M.description}
+                    onChange={this.setTaskField} />
 
                 <span className='splittedRowChange'>
-                    <input name='value' value={this.state.value} className='form-control task-value' placeholder={M.taskValue}
-                    onChange={(e) => this.setTaskField(e)} />
+                    <input name='value'
+                        value={this.state.value}
+                        className='form-control task-value'
+                        placeholder={M.taskValue}
+                        onChange={this.setTaskField} />
 
                     <DatePicker dateFormat='DD/MM/YYYY'
                         selected={this.state.deadline}
@@ -65,4 +73,8 @@ export default class TaskForm extends Component {
             </div>
         )
     }
+}
+
+TaskForm.propTypes = {
+    onTaskCreateCallback: React.PropTypes.func.isRequired,
 }

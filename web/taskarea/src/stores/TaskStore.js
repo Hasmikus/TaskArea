@@ -41,7 +41,7 @@ class TaskStore {
   };
 
   showNewTask(newTask) {
-    this.notificationTasks.push(newTask);
+      this.notificationTasks.push(newTask);
   }
 
 }

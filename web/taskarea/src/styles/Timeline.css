@@ -9,7 +9,7 @@
 .title {
   display: inline-block;
   width: 75%;
-  margin-left: 33%; }
+  margin-left: 29%; }
 
 .largeButton:active {
   position: relative;
@@ -58,6 +58,8 @@
   background-color: #373737;
   display: inline-block;
   position: fixed; }
+  .menu-container .fa-pencil {
+    margin-left: 7%; }
   .menu-container .nav {
     padding-left: 11%;
     margin-top: 8%;

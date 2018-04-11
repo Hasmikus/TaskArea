@@ -1,13 +1,10 @@
 // SignInPage.jsx
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {observable} from "mobx";
-import PropTypes from 'prop-types';
 
 import SignInForm from './SignInForm';
 
 import {auth} from '../firebase';
-import UserStore from '../stores/UserStore';
 
 @observer
 export default class SignInPage extends Component {
@@ -32,5 +29,5 @@ export default class SignInPage extends Component {
 };
 
 SignInPage.propTypes = {
-    history: PropTypes.object,
+    history: React.PropTypes.object,
 }

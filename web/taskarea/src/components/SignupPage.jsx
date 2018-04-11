@@ -5,7 +5,6 @@ import {observer} from "mobx-react";
 import SignupForm from './SignupForm';
 import {auth, db} from '../firebase';
 import UserStore from '../stores/UserStore';
-import PropTypes from 'prop-types';
 
 @observer
 export default class SignupPage extends Component {
@@ -31,5 +30,5 @@ export default class SignupPage extends Component {
 }
 
 SignupPage.propTypes = {
-    history: PropTypes.object,
+    history: React.PropTypes.object,
 }

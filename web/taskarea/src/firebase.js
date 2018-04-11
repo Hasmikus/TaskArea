@@ -14,6 +14,7 @@ let config = {
 export const firebaseApp = firebase.initializeApp(config);
 export const db = firebaseApp.database();
 export const auth = firebaseApp.auth();
+export const storage = firebaseApp.storage();
 export const storageKey = 'pain-login';
 
 export const isAuthenticated = () => {
@@ -26,6 +27,8 @@ db.ref("users/").on("value", (snapshot) => {
     console.log("The read failed: " + errorObject.code);
 });
 
-db.ref('tasks/').orderByChild('timestamp').startAt(Date.now()).on('child_added', function(snapshot) {
-   TaskStore.showNewTask(snapshot.val());
-});
+db.ref('tasks/').orderByChild('timestamp')
+    .startAt(Date.now())
+    .on('child_added', function(snapshot) {
+        TaskStore.showNewTask(snapshot.val());
+    });

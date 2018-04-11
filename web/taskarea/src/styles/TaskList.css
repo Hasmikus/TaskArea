@@ -3,6 +3,54 @@
   width: 40%;
   margin-left: 25%; }
 
+.profile-editor {
+  font-size: 14px;
+  margin-top: 2%; }
+  .profile-editor form {
+    margin-left: 8%; }
+  .profile-editor input {
+    margin-left: 2%;
+    width: 70%;
+    color: #907d7d;
+    border-radius: 8px;
+    padding: 1%; }
+  .profile-editor .avatar-image {
+    width: 23%;
+    margin-left: 7%;
+    height: 100px;
+    border-radius: 49%; }
+  .profile-editor .btn-primary,
+  .profile-editor .btn-primary:active:focus,
+  .profile-editor .btn-primary:active:hover {
+    width: 48%;
+    border-radius: 8px;
+    outline: none;
+    margin-top: 5%;
+    margin-right: 1%; }
+    .profile-editor .btn-primary:active:hover, .profile-editor .btn-primary:hover,
+    .profile-editor .btn-primary:active:focus:active:hover,
+    .profile-editor .btn-primary:active:focus:hover,
+    .profile-editor .btn-primary:active:hover:active:hover,
+    .profile-editor .btn-primary:active:hover:hover {
+      border-color: #71454a; }
+  .profile-editor button[type=submit],
+  .profile-editor button[type=submit]:active:focus,
+  .profile-editor button[type=submit]:active:hover,
+  .profile-editor button[type=submit][disabled]:hover {
+    background-color: #E14658;
+    border-color: #E14658; }
+  .profile-editor button[type=button],
+  .profile-editor button[type=button]:hover,
+  .profile-editor button[type=button]:active:focus,
+  .profile-editor button[type=button]:active:hover {
+    background-color: #3d4750;
+    border-color: #262b2f; }
+  .profile-editor .image-uploader {
+    display: inline-block; }
+    .profile-editor .image-uploader input {
+      color: white;
+      width: 100%; }
+
 .taskContainer {
   width: 482px;
   background: #22252C;
@@ -55,3 +103,5 @@
     background: #e1465761; }
     .notifications .notification .notificationContent {
       width: 70%; }
+      .notifications .notification .notificationContent .left-items, .notifications .notification .notificationContent .right-items {
+        margin-top: 1%; }

@@ -13,17 +13,17 @@ export default class Notification extends Component {
         super();
         this.state = {
             taskAssigneePhoto: '',
-            isNotificationVisible: true
+            isNotificationVisible: true,
         }
     }
 
     componentWillMount() {
-            const assigneeUser = Object.entries(UserStore.users).filter((userData) => {
-                return userData[0] === this.props.taskData.owner;
-            })[0][1];
-            this.setState({
-                taskAssigneePhoto: assigneeUser.photoURL
-            });
+        const assigneeUser = Object.entries(UserStore.users).filter((userData) => {
+            return userData[0] === this.props.taskData.owner;
+        })[0][1];
+        this.setState({
+            taskAssigneePhoto: assigneeUser.photoURL,
+        });
     }
 
     assignTask = () => {
@@ -33,7 +33,7 @@ export default class Notification extends Component {
 
     onClose = () => {
         this.setState({
-            isNotificationVisible: false
+            isNotificationVisible: false,
         });
     }
 
@@ -51,9 +51,9 @@ export default class Notification extends Component {
                             <Icon name='times' />
                         </button>
                         {isTaskAssignable && (
-                             <button onClick={this.assignTask}>
-                                 <Icon name='plus' />
-                             </button>)
+                            <button onClick={this.assignTask}>
+                                <Icon name='plus' />
+                            </button>)
                         }
                     </span>
                     <span className='right-items'>
@@ -67,5 +67,6 @@ export default class Notification extends Component {
 }
 
 Notification.propTypes = {
-    taskData: React.PropTypes.object
+    taskData: React.PropTypes.object.isRequired,
+    taskID: React.PropTypes.number.isRequired,
 }

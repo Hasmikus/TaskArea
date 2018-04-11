@@ -10,7 +10,7 @@
 .title {
     display: inline-block;
     width: 75%;
-    margin-left: 33%;
+    margin-left: 29%;
 }
 
 .largeButton:active {
@@ -71,6 +71,10 @@
   background-color: #373737;
   display: inline-block;
   position: fixed;
+
+  .fa-pencil {
+      margin-left: 7%;
+  }
 
   .nav {
       padding-left: 11%;

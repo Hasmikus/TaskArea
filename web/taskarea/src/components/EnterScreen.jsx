@@ -1,13 +1,12 @@
 // EnterScreen.jsx
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import {Link} from 'react-router-dom';
-import {Button} from 'react-bootstrap'
-
 import {auth} from '../firebase';
-import UserStore from '../stores/UserStore';
 
 import M from '../messages/en.messages';
+
+import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap'
 
 @observer
 export default class EnterScreen extends Component {
@@ -15,7 +14,7 @@ export default class EnterScreen extends Component {
         return (
             <div className='enterScreen'>
                 <span className='buttonGroup'>
-                   <Button bsSize='large' className='topButton'>{M.getStarted}</Button>
+                    <Button bsSize='large' className='topButton'>{M.getStarted}</Button>
                     <Link to='/signup'>
                         <Button bsSize='large' className='topButton signUpButton'>
                             {M.signUp}

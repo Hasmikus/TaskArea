@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 import {Icon} from 'react-fa';
-import PropTypes from 'prop-types';
 
 import UserStore from '../stores/UserStore';
 
@@ -15,19 +14,15 @@ export default class SignInForm extends Component {
             username: '',
             email: '',
             password: '',
-            error: null
+            error: null,
         }
-
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
     }
 
-    onChange(e) {
+    onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
-    }
+    };
 
-    onSubmit(e) {
+    onSubmit = (e) => {
         e.preventDefault();
         UserStore.userSignInRequest(this.state, this.props.auth)
             .then((data) => {
@@ -38,7 +33,7 @@ export default class SignInForm extends Component {
                     this.setState({error: data.error});
                 }
             });
-    }
+    };
 
     render() {
         return (
@@ -97,16 +92,16 @@ class InputData extends Component {
 };
 
 InputData.propTypes = {
-    type: PropTypes.string,
-    name: PropTypes.string,
-    value: PropTypes.string,
-    icon: PropTypes.string,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func,
+    type: React.PropTypes.string,
+    name: React.PropTypes.string,
+    value: React.PropTypes.string,
+    icon: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    onChange: React.PropTypes.func,
 }
 
 SignInForm.propTypes = {
-    userSignInRequest: PropTypes.func,
-    auth: PropTypes.object,
-    history: PropTypes.object,
+    userSignInRequest: React.PropTypes.func,
+    auth: React.PropTypes.object,
+    history: React.PropTypes.object,
 }
