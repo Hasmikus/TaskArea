@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient';
 import firebase from 'react-native-firebase';
-import Button from 'react-native-button'
 
 import ApplicationStyles from '../styles'
 
 import CustomInput from '../components/CustomInput'
+import { Text, View, StyleSheet, TextInput } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient';
+import Button from 'react-native-button'
 
 import userStore from '../stores/user_store'
 
@@ -31,19 +31,15 @@ export default class Login extends Component {
 
   logIn = () => {
   const { email, password } = this.state;
-  firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+  firebase
+    .auth()
+    .signInAndRetrieveDataWithEmailAndPassword(email, password)
     .then((user) => {
       userStore.setCurrentUser(user);
       this.props.navigation.navigate('Timeline');
-      // If we need to do anything with the user, do it here
-      // The user will be logged in automatically by the 
-      // `onAuthStateChanged` listener we set up in App.js earlier
     })
     .catch((error) => {
       const { code, message } = error;
-      // For details of error codes, see the docs
-      // The message contains the default Firebase string
-      // representation of the error
     });
   };
 
